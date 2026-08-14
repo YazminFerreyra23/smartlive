@@ -1,0 +1,1 @@
+{"ast":null,"code":"import { LandingComponent } from './landing/landing.component';\nexport const routes = [{\n  path: '',\n  component: LandingComponent\n}, {\n  path: '**',\n  redirectTo: ''\n}];","map":null,"metadata":{},"sourceType":"module","externalDependencies":[]}
