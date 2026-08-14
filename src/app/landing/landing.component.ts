@@ -52,7 +52,7 @@ export class LandingComponent {
   private readonly whatsappPhone = '5493512517479';
 
   protected readonly whatsappUrl = this.createWhatsappUrl(
-    'Hola SmartLife, quiero recibir información para automatizar mi espacio.',
+    'Hola ModoConectado, quiero recibir información para automatizar mi espacio.',
   );
 
   protected readonly navItems: NavigationItem[] = [
@@ -199,7 +199,7 @@ export class LandingComponent {
 
   protected comboWhatsappUrl(solution: SolutionCard): string {
     return this.createWhatsappUrl(
-      `Hola SmartLife, quiero cotizar el combo para ${solution.title}. Me interesa automatizar con Alexa, cámaras y dispositivos inteligentes.`,
+      `Hola ModoConectado, quiero cotizar el combo para ${solution.title}. Me interesa automatizar con Alexa, cámaras y dispositivos inteligentes.`,
     );
   }
 
