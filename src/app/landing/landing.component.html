@@ -1,14 +1,7 @@
 <header class="site-header" [class.site-header--scrolled]="isScrolled()">
   <a class="brand" href="#inicio" aria-label="Ir al inicio" (click)="closeMenu()">
-    <span class="brand__mark" aria-hidden="true">
-      <svg viewBox="0 0 32 32">
-        <path d="M4.5 13.8 16 5l11.5 8.8V27h-7.3v-9.4h-8.4V27H4.5V13.8Z" />
-        <path d="M12.1 27v-9.4h7.8V27" />
-      </svg>
-    </span>
-    <span class="brand__text">
-      <strong>Modo<span>Conectado</span></strong>
-      <small>Automatización inteligente</small>
+    <span class="brand__mark brand__mark--horizontal" aria-hidden="true">
+      <img src="assets/images/logo-horizontal(1).svg" alt="">
     </span>
   </a>
 
@@ -47,8 +40,10 @@
     <div class="hero__shade" aria-hidden="true"></div>
 
     <div class="hero__content page-shell">
-      <p class="eyebrow">Tecnología que se adapta a tu vida</p>
-      <h1>Automatizá tu casa <span>o negocio.</span></h1>
+      <div class="hero__trigger">
+        <p class="eyebrow">Tecnología que se adapta a tu vida</p>
+        <h1>Automatizá tu casa <span>o negocio.</span></h1>
+      </div>
       <p class="hero__lead">
         Controlá luces, cámaras, cerraduras y más desde Alexa, tu celular o con tu voz.
       </p>
@@ -56,9 +51,9 @@
 
       <div class="hero__actions">
         <a class="button button--primary" [href]="whatsappUrl" target="_blank" rel="noreferrer">
-          <svg viewBox="0 0 24 24" aria-hidden="true">
-            <path d="M20.5 11.9a8.4 8.4 0 0 1-12.4 7.4L4 20.5l1.3-4A8.4 8.4 0 1 1 20.5 12Z" />
-            <path d="M9.7 8.2c-.2-.5-.4-.5-.7-.5h-.6c-.2 0-.6.1-.9.4-.3.4-1.1 1-1.1 2.5s1.1 2.9 1.2 3.1c.2.2 2.1 3.3 5.2 4.4 2.6.9 3.1.7 3.7.7.6-.1 1.8-.7 2-1.4.3-.7.3-1.3.2-1.4-.1-.2-.3-.2-.6-.4l-1.9-.9c-.3-.1-.5-.2-.7.2-.2.3-.8.9-1 1.1-.2.2-.4.2-.7.1-.3-.2-1.3-.5-2.5-1.5-.9-.8-1.5-1.8-1.7-2.1-.2-.3 0-.5.1-.6l.5-.6c.2-.2.2-.3.3-.5.1-.2.1-.4 0-.6l-.8-2Z" />
+          <svg class="whatsapp-icon" viewBox="0 0 32 32" aria-hidden="true">
+            <path class="whatsapp-icon__bubble" fill="#25d366" d="M16 3.2A12.7 12.7 0 0 0 5.1 22.4L3.6 28.8l6.6-1.5A12.7 12.7 0 1 0 16 3.2Z" />
+            <path class="whatsapp-icon__phone" fill="#fff" d="M22.9 18.9c-.4-.2-2.2-1.1-2.6-1.2-.3-.1-.6-.2-.9.2-.3.4-1 1.2-1.2 1.4-.2.3-.4.3-.8.1-.4-.2-1.5-.6-2.9-1.8-1.1-1-1.8-2.1-2-2.5-.2-.4 0-.6.2-.8l.6-.7c.2-.2.3-.4.4-.7.1-.2.1-.5 0-.7-.1-.2-.9-2.1-1.2-2.9-.3-.7-.6-.6-.9-.6h-.8c-.3 0-.7.1-1.1.5-.4.4-1.4 1.4-1.4 3.3s1.5 3.8 1.7 4.1c.2.3 2.8 4.4 6.9 6.1 1 .4 1.7.7 2.3.8 1 .3 1.8.2 2.5.2.8-.1 2.2-.9 2.5-1.8.3-.9.3-1.7.2-1.9-.1-.3-.4-.4-.8-.6Z" />
           </svg>
           Cotizá por WhatsApp
         </a>
@@ -112,30 +107,52 @@
       <article class="combo-panel">
         <div class="combo-panel__image">
           <img [src]="activeSolution().image" [alt]="'Combo para ' + activeSolution().title">
+          <div
+            *ngIf="activeSolution().featuredProducts?.length"
+            class="combo-highlights"
+            [class.combo-highlights--dense]="(activeSolution().featuredProducts?.length ?? 0) > 4"
+            aria-label="Productos incluidos destacados"
+          >
+            <button
+              *ngFor="let product of activeSolution().featuredProducts"
+              type="button"
+              class="combo-highlight"
+              [class.combo-highlight--align-start]="product.x < 30"
+              [class.combo-highlight--align-end]="product.x > 64"
+              [class.combo-highlight--tooltip-top]="product.y > 52"
+              [style.left.%]="product.x"
+              [style.top.%]="product.y"
+              [attr.aria-label]="product.label + '. ' + product.description"
+            >
+              <span class="combo-highlight__media">
+                <img [src]="product.image" alt="">
+              </span>
+              <strong>{{ product.label }}</strong>
+              <span class="combo-highlight__description">{{ product.description }}</span>
+            </button>
+          </div>
         </div>
         <div class="combo-panel__content">
-          <p class="combo-panel__eyebrow">{{ activeSolution().eyebrow }}</p>
+          <p class="combo-panel__eyebrow">{{ activeSolution().eyebrow }} · Combo {{ activeSolution().title }}</p>
           <h3>{{ activeSolution().headline }}</h3>
+          <p class="combo-panel__promise">{{ activeSolution().promise }}</p>
 
           <div class="voice-command">
             <span aria-hidden="true"></span>
-            <strong>“{{ activeSolution().voiceCommand }}”</strong>
+            <div>
+              <small>Escena sugerida</small>
+              <strong>“{{ activeSolution().voiceCommand }}”</strong>
+            </div>
           </div>
 
-          <div class="combo-panel__details">
-            <div>
-              <p>Incluye</p>
-              <ul>
-                <li *ngFor="let product of activeSolution().products">{{ product }}</li>
-              </ul>
-            </div>
-            <div>
-              <p>Activá</p>
-              <ul>
-                <li *ngFor="let outcome of activeSolution().outcomes">{{ outcome }}</li>
-              </ul>
+          <div class="combo-kit">
+            <p>Kit incluido</p>
+            <div class="combo-kit__items">
+              <span *ngFor="let product of activeSolution().products">{{ product }}</span>
             </div>
           </div>
+
+          <p class="combo-panel__result">{{ activeSolution().result }}</p>
 
           <div class="combo-panel__footer">
             <div>
@@ -152,20 +169,32 @@
   </section>
 
   <section id="combos" class="products section-anchor page-shell">
-    <div class="products__media" aria-hidden="true"></div>
-    <div class="products__content">
-      <p class="eyebrow eyebrow--green">Productos inteligentes</p>
-      <h2>Todo lo necesario para automatizar de verdad.</h2>
-      <p>
-        Combinamos dispositivos disponibles con instalación y configuración para crear sistemas completos,
-        no compras sueltas difíciles de usar.
-      </p>
+    <div class="promo-showcase" aria-label="Promo destacada">
+      <div class="promo-showcase__header">
+        <span>Promo destacada</span>
+        <h2>Empezá con un kit completo, claro y listo para usar.</h2>
+      </div>
 
-      <div class="product-list" aria-label="Productos disponibles">
-        <article class="product-item" *ngFor="let product of productCategories">
-          <h3>{{ product.title }}</h3>
-          <p>{{ product.description }}</p>
-        </article>
+      <div class="promo-summary">
+        <div class="promo-equation">
+          <ng-container *ngFor="let product of promoProducts; let isLast = last">
+            <article class="promo-product">
+              <span class="promo-product__image">
+                <img [src]="product.image" [alt]="product.quantity + ' ' + product.name">
+              </span>
+              <div>
+                <strong>{{ product.quantity }}</strong>
+                <p>{{ product.name }}</p>
+              </div>
+            </article>
+            <span *ngIf="!isLast" class="promo-plus" aria-hidden="true">+</span>
+          </ng-container>
+        </div>
+
+        <div>
+          <span>Precio promo</span>
+          <strong>$275.000</strong>
+        </div>
       </div>
     </div>
   </section>
@@ -209,9 +238,9 @@
     </div>
     <div class="cta__action">
       <a class="button button--primary" [href]="whatsappUrl" target="_blank" rel="noreferrer">
-        <svg viewBox="0 0 24 24" aria-hidden="true">
-          <path d="M20.5 11.9a8.4 8.4 0 0 1-12.4 7.4L4 20.5l1.3-4A8.4 8.4 0 1 1 20.5 12Z" />
-          <path d="M9.7 8.2c-.2-.5-.4-.5-.7-.5h-.6c-.2 0-.6.1-.9.4-.3.4-1.1 1-1.1 2.5s1.1 2.9 1.2 3.1c.2.2 2.1 3.3 5.2 4.4 2.6.9 3.1.7 3.7.7.6-.1 1.8-.7 2-1.4.3-.7.3-1.3.2-1.4-.1-.2-.3-.2-.6-.4l-1.9-.9c-.3-.1-.5-.2-.7.2-.2.3-.8.9-1 1.1-.2.2-.4.2-.7.1-.3-.2-1.3-.5-2.5-1.5-.9-.8-1.5-1.8-1.7-2.1-.2-.3 0-.5.1-.6l.5-.6c.2-.2.2-.3.3-.5.1-.2.1-.4 0-.6l-.8-2Z" />
+        <svg class="whatsapp-icon" viewBox="0 0 32 32" aria-hidden="true">
+          <path class="whatsapp-icon__bubble" fill="#25d366" d="M16 3.2A12.7 12.7 0 0 0 5.1 22.4L3.6 28.8l6.6-1.5A12.7 12.7 0 1 0 16 3.2Z" />
+          <path class="whatsapp-icon__phone" fill="#fff" d="M22.9 18.9c-.4-.2-2.2-1.1-2.6-1.2-.3-.1-.6-.2-.9.2-.3.4-1 1.2-1.2 1.4-.2.3-.4.3-.8.1-.4-.2-1.5-.6-2.9-1.8-1.1-1-1.8-2.1-2-2.5-.2-.4 0-.6.2-.8l.6-.7c.2-.2.3-.4.4-.7.1-.2.1-.5 0-.7-.1-.2-.9-2.1-1.2-2.9-.3-.7-.6-.6-.9-.6h-.8c-.3 0-.7.1-1.1.5-.4.4-1.4 1.4-1.4 3.3s1.5 3.8 1.7 4.1c.2.3 2.8 4.4 6.9 6.1 1 .4 1.7.7 2.3.8 1 .3 1.8.2 2.5.2.8-.1 2.2-.9 2.5-1.8.3-.9.3-1.7.2-1.9-.1-.3-.4-.4-.8-.6Z" />
         </svg>
         Cotizá por WhatsApp
       </a>
@@ -222,15 +251,8 @@
 
 <footer id="sobre-nosotros" class="footer section-anchor page-shell">
   <a class="brand" href="#inicio" aria-label="Ir al inicio">
-    <span class="brand__mark" aria-hidden="true">
-      <svg viewBox="0 0 32 32">
-        <path d="M4.5 13.8 16 5l11.5 8.8V27h-7.3v-9.4h-8.4V27H4.5V13.8Z" />
-        <path d="M12.1 27v-9.4h7.8V27" />
-      </svg>
-    </span>
-    <span class="brand__text">
-      <strong>Smart<span>Life</span></strong>
-      <small>Automatización inteligente</small>
+    <span class="brand__mark brand__mark--horizontal" aria-hidden="true">
+      <img src="assets/images/logo-horizontal(1).svg" alt="">
     </span>
   </a>
 
@@ -238,12 +260,12 @@
     <a *ngFor="let item of navItems" [href]="'#' + item.target">{{ item.label }}</a>
   </nav>
 
-  <p>© 2024 SmartLife. Todos los derechos reservados.</p>
+  <p>© 2024 ModoConectado. Todos los derechos reservados.</p>
 </footer>
 
 <a class="whatsapp-float" [href]="whatsappUrl" target="_blank" rel="noreferrer" aria-label="Cotizá por WhatsApp">
-  <svg viewBox="0 0 24 24" aria-hidden="true">
-    <path d="M20.5 11.9a8.4 8.4 0 0 1-12.4 7.4L4 20.5l1.3-4A8.4 8.4 0 1 1 20.5 12Z" />
-    <path d="M9.7 8.2c-.2-.5-.4-.5-.7-.5h-.6c-.2 0-.6.1-.9.4-.3.4-1.1 1-1.1 2.5s1.1 2.9 1.2 3.1c.2.2 2.1 3.3 5.2 4.4 2.6.9 3.1.7 3.7.7.6-.1 1.8-.7 2-1.4.3-.7.3-1.3.2-1.4-.1-.2-.3-.2-.6-.4l-1.9-.9c-.3-.1-.5-.2-.7.2-.2.3-.8.9-1 1.1-.2.2-.4.2-.7.1-.3-.2-1.3-.5-2.5-1.5-.9-.8-1.5-1.8-1.7-2.1-.2-.3 0-.5.1-.6l.5-.6c.2-.2.2-.3.3-.5.1-.2.1-.4 0-.6l-.8-2Z" />
+  <svg class="whatsapp-icon" viewBox="0 0 32 32" aria-hidden="true">
+    <path class="whatsapp-icon__bubble" fill="#25d366" d="M16 3.2A12.7 12.7 0 0 0 5.1 22.4L3.6 28.8l6.6-1.5A12.7 12.7 0 1 0 16 3.2Z" />
+    <path class="whatsapp-icon__phone" fill="#fff" d="M22.9 18.9c-.4-.2-2.2-1.1-2.6-1.2-.3-.1-.6-.2-.9.2-.3.4-1 1.2-1.2 1.4-.2.3-.4.3-.8.1-.4-.2-1.5-.6-2.9-1.8-1.1-1-1.8-2.1-2-2.5-.2-.4 0-.6.2-.8l.6-.7c.2-.2.3-.4.4-.7.1-.2.1-.5 0-.7-.1-.2-.9-2.1-1.2-2.9-.3-.7-.6-.6-.9-.6h-.8c-.3 0-.7.1-1.1.5-.4.4-1.4 1.4-1.4 3.3s1.5 3.8 1.7 4.1c.2.3 2.8 4.4 6.9 6.1 1 .4 1.7.7 2.3.8 1 .3 1.8.2 2.5.2.8-.1 2.2-.9 2.5-1.8.3-.9.3-1.7.2-1.9-.1-.3-.4-.4-.8-.6Z" />
   </svg>
 </a>

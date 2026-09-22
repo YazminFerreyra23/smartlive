@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="30 25 720 195">
+ <g fill="none" stroke="#B7FF00" stroke-width="18" stroke-linecap="round" stroke-linejoin="round">
+  <path d="M55 112 L130 48 L205 112 V190 H157 V143 H103 V190 H55 Z"/>
+  <path d="M95 111 Q130 78 165 111"/><path d="M108 128 Q130 108 152 128"/><circle cx="130" cy="146" r="5" fill="#B7FF00" stroke="none"/>
+ </g>
+ <text x="245" y="105" font-family="Arial,Helvetica,sans-serif" font-size="66" font-weight="800" fill="#FFFFFF">MODO</text>
+ <text x="245" y="170" font-family="Arial,Helvetica,sans-serif" font-size="66" font-weight="800" fill="#B7FF00">CONECTADO</text>
+ <text x="248" y="204" font-family="Arial,Helvetica,sans-serif" font-size="18" font-weight="600" letter-spacing="7" fill="#FFFFFF">AUTOMATIZACIÓN INTELIGENTE</text>
+</svg>

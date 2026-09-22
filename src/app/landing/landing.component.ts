@@ -18,16 +18,28 @@ interface SolutionCard {
   title: string;
   description: string;
   headline: string;
+  promise: string;
+  result: string;
   image: string;
   voiceCommand: string;
   price: string;
   products: string[];
   outcomes: string[];
+  featuredProducts?: ComboFeaturedProduct[];
 }
 
-interface ProductCategory {
-  title: string;
+interface ComboFeaturedProduct {
+  label: string;
   description: string;
+  image: string;
+  x: number;
+  y: number;
+}
+
+interface PromoProduct {
+  quantity: string;
+  name: string;
+  image: string;
 }
 
 interface Benefit {
@@ -66,74 +78,206 @@ export class LandingComponent {
   protected readonly solutions: SolutionCard[] = [
     {
       eyebrow: 'Smart Home',
-      title: 'Casa',
-      description: 'Alexa, focos, sensores y cámaras.',
-      headline: 'Tu casa inteligente. Tu vida más simple.',
-      image: 'assets/images/solution-home-alexa-security.jpg',
-      voiceCommand: 'Alexa, llegué a casa',
-      price: '$420.000',
-      products: ['1 Alexa', 'Focos smart', 'Cámaras', 'Sensores', 'Módulos inteligentes'],
-      outcomes: ['Luces encendidas', 'Cámaras monitoreando', 'Sensores activos', 'Todo desde tu celular'],
-    },
-    {
-      eyebrow: 'Smart Home',
       title: 'Departamento',
       description: 'Alexa, cámaras y escenas inteligentes.',
       headline: 'Tu departamento automatizado y más cómodo.',
+      promise: 'Controlá luces, voz y entretenimiento sin complicarte con instalaciones grandes.',
+      result: 'Perfecto para sumar confort rápido en espacios compactos.',
       image: 'assets/images/solution-apartment-alexa-security.jpg',
       voiceCommand: 'Alexa, modo descanso',
       price: '$220.000',
-      products: ['1 Alexa', '3 focos smart', '1 control smart'],
+      products: ['1 Alexa', '5 focos smart', '1 control smart'],
       outcomes: ['Control por voz', 'Automatización inteligente', 'Mayor comodidad', 'Todo desde una sola app'],
+      featuredProducts: [
+        {
+          label: '1 Alexa',
+          description: 'Controlá luces, escenas y rutinas usando solo tu voz.',
+          image: 'assets/images/Alexa.png',
+          x: 68,
+          y: 68,
+        },
+        {
+          label: '5 focos smart',
+          description: 'Apagá, encendé y regulá las luces desde donde estés.',
+          image: 'assets/images/foco.png',
+          x: 52,
+          y: 28,
+        },
+        {
+          label: '1 control',
+          description: 'Manejás TV, aire y equipos compatibles desde una sola app.',
+          image: 'assets/images/control.png',
+          x: 22,
+          y: 62,
+        },
+      ],
+    },
+    {
+      eyebrow: 'Smart Home',
+      title: 'Casa',
+      description: 'Alexa, focos, sensores y cámaras.',
+      headline: 'Tu casa inteligente. Tu vida más simple.',
+      promise: 'Automatizá los ambientes principales y controlá seguridad, luces y rutinas desde un solo lugar.',
+      result: 'Ideal para empezar con una casa conectada sin instalaciones invasivas.',
+      image: 'assets/images/solution-home-alexa-security.jpg',
+      voiceCommand: 'Alexa, llegué a casa',
+      price: '$450.000',
+      products: [
+        '1 Alexa',
+        '5 focos smart',
+        '1 cámara interna',
+        '1 cámara externa',
+        '2 sensores',
+        '1 control smart',
+        '2 interruptores',
+      ],
+      outcomes: ['Luces encendidas', 'Cámaras monitoreando', 'Sensores activos', 'Todo desde tu celular'],
+      featuredProducts: [
+        {
+          label: '1 Alexa',
+          description: 'Activá escenas completas con comandos de voz simples.',
+          image: 'assets/images/Alexa.png',
+          x: 20,
+          y: 67,
+        },
+        {
+          label: '5 focos',
+          description: 'Controlá la iluminación de los ambientes principales desde el celular.',
+          image: 'assets/images/foco.png',
+          x: 44,
+          y: 28,
+        },
+        {
+          label: '1 cámara interna',
+          description: 'Mirá lo que pasa dentro de tu casa en tiempo real.',
+          image: 'assets/images/camaraInterna.png',
+          x: 67,
+          y: 42,
+        },
+        {
+          label: '1 cámara externa',
+          description: 'Sumá monitoreo en accesos, patio o ingreso principal.',
+          image: 'assets/images/camaraExterna.png',
+          x: 77,
+          y: 20,
+        },
+        {
+          label: '2 sensores',
+          description: 'Recibí alertas por movimiento, puertas o ventanas según la instalación.',
+          image: 'assets/images/sensor.png',
+          x: 33,
+          y: 51,
+        },
+        {
+          label: '1 control',
+          description: 'Centralizá TV, aire y equipos compatibles en una sola app.',
+          image: 'assets/images/control.png',
+          x: 73,
+          y: 73,
+        },
+        {
+          label: '2 interruptores',
+          description: 'Automatizá luces o circuitos sin perder el uso manual.',
+          image: 'assets/images/interruptor.png',
+          x: 45,
+          y: 76,
+        },
+      ],
     },
     {
       eyebrow: 'Smart Business',
       title: 'Negocios',
       description: 'Monitoreo, alarmas y control por voz.',
       headline: 'Tu negocio no depende de que estés presente.',
+      promise: 'Monitoreá, encendé luces y recibí alertas desde el celular cuando no estás.',
+      result: 'Pensado para operar con más control y menos preocupación diaria.',
       image: 'assets/images/solution-business-alexa-security.jpg',
       voiceCommand: 'Alexa, activar modo negocio',
-      price: '$350.000',
-      products: ['1 Alexa', 'Cámaras', 'Sensores de apertura', 'Luces smart', 'Control remoto'],
+      price: '$420.000',
+      products: [
+        '1 Alexa',
+        '2 interruptores',
+        '1 cámara externa',
+        '1 cámara interna',
+        '2 sensores',
+        '3 focos smart',
+        '1 control smart',
+      ],
       outcomes: ['Mirá tu negocio en tiempo real', 'Controlá las luces', 'Recibí alertas', 'Activá funciones con Alexa'],
-    },
-    {
-      eyebrow: 'Smart Security',
-      title: 'Kioscos',
-      description: 'Cierre inteligente, cámaras y Alexa.',
-      headline: 'Vos descansás. Tu kiosco queda protegido.',
-      image: 'assets/images/solution-kiosk-alexa-security.jpg',
-      voiceCommand: 'Alexa, modo ahorro',
-      price: '$415.000',
-      products: ['1 Alexa', 'Cámaras', 'Sensores', 'Módulos de interruptor', 'Alertas al celular'],
-      outcomes: ['Apagado automático', 'Monitoreo remoto', 'Sensores activos', 'Menos consumo'],
+      featuredProducts: [
+        {
+          label: '1 Alexa',
+          description: 'Activá rutinas de apertura, cierre o seguridad con comandos de voz.',
+          image: 'assets/images/Alexa.png',
+          x: 18,
+          y: 66,
+        },
+        {
+          label: '2 interruptores',
+          description: 'Automatizá luces o circuitos clave sin perder el control manual.',
+          image: 'assets/images/interruptor.png',
+          x: 42,
+          y: 72,
+        },
+        {
+          label: '1 cámara externa',
+          description: 'Controlá accesos, vidriera o entrada desde tu celular.',
+          image: 'assets/images/camaraExterna.png',
+          x: 76,
+          y: 24,
+        },
+        {
+          label: '1 cámara interna',
+          description: 'Supervisá atención, caja o movimiento dentro del local.',
+          image: 'assets/images/camaraInterna.png',
+          x: 66,
+          y: 45,
+        },
+        {
+          label: '2 sensores',
+          description: 'Recibí alertas ante aperturas o movimientos fuera de horario.',
+          image: 'assets/images/sensor.png',
+          x: 34,
+          y: 48,
+        },
+        {
+          label: '3 focos',
+          description: 'Programá iluminación para atención, cierre o ahorro de energía.',
+          image: 'assets/images/foco.png',
+          x: 50,
+          y: 28,
+        },
+        {
+          label: '1 control',
+          description: 'Centralizá aire, TV u otros equipos compatibles desde una app.',
+          image: 'assets/images/control.png',
+          x: 74,
+          y: 72,
+        },
+      ],
     },
   ];
 
-  protected readonly productCategories: ProductCategory[] = [
+  protected readonly promoProducts: PromoProduct[] = [
     {
-      title: 'Alexa Echo Dot',
-      description: 'Control por voz para luces, escenas y rutinas.',
+      quantity: '1',
+      name: 'Alexa',
+      image: 'assets/images/Alexa.png',
     },
     {
-      title: 'Focos inteligentes',
-      description: 'Iluminación regulable y programable por ambientes.',
+      quantity: '5',
+      name: 'Focos smart',
+      image: 'assets/images/foco.png',
     },
     {
-      title: 'Controles remotos',
-      description: 'Centralizá TV, aire y equipos compatibles.',
+      quantity: '1',
+      name: 'Control smart',
+      image: 'assets/images/control.png',
     },
     {
-      title: 'Cámaras de seguridad',
-      description: 'Interior y exterior con monitoreo desde el celular.',
-    },
-    {
-      title: 'Módulos para interruptores',
-      description: 'Automatización oculta sin cambiar la estética.',
-    },
-    {
-      title: 'Sensores de apertura',
-      description: 'Alertas para puertas, ventanas y accesos.',
+      quantity: '1',
+      name: 'Cámara interna',
+      image: 'assets/images/camaraInterna.png',
     },
   ];
 
