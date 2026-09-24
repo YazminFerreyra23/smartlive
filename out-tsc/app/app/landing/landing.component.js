@@ -71,7 +71,7 @@ export class LandingComponent {
         this.renderer = renderer;
         this.isScrolled = signal(false, ...(ngDevMode ? [{ debugName: "isScrolled" }] : /* istanbul ignore next */ []));
         this.isMenuOpen = signal(false, ...(ngDevMode ? [{ debugName: "isMenuOpen" }] : /* istanbul ignore next */ []));
-        this.whatsappUrl = 'https://wa.me/5493510000000?text=Hola%20SmartLife%2C%20quiero%20cotizar%20una%20automatizaci%C3%B3n.';
+        this.whatsappUrl = 'https://wa.me/5493512008632?text=Hola%20SmartLife%2C%20quiero%20cotizar%20una%20automatizaci%C3%B3n.';
         this.navItems = [
             { label: 'Inicio', target: 'inicio' },
             { label: 'Soluciones', target: 'soluciones' },

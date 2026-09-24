@@ -119,10 +119,13 @@
               class="combo-highlight"
               [class.combo-highlight--align-start]="product.x < 30"
               [class.combo-highlight--align-end]="product.x > 64"
-              [class.combo-highlight--tooltip-top]="product.y > 52"
-              [style.left.%]="product.x"
+              [class.combo-highlight--tooltip-top]="product.tooltipPosition ? product.tooltipPosition === 'top' : product.y > 52"
+              [style.left]="'clamp(96px, ' + product.x + '%, calc(100% - 96px))'"
               [style.top.%]="product.y"
               [attr.aria-label]="product.label + '. ' + product.description"
+              (focus)="activeFeaturedProduct.set(product)"
+              (click)="activeFeaturedProduct.set(product)"
+              (blur)="activeFeaturedProduct.set(null)"
             >
               <span class="combo-highlight__media">
                 <img [src]="product.image" alt="">
@@ -130,6 +133,14 @@
               <strong>{{ product.label }}</strong>
               <span class="combo-highlight__description">{{ product.description }}</span>
             </button>
+            <p
+              *ngIf="(activeSolution().featuredProducts?.length ?? 0) > 4 && activeFeaturedProduct() as product"
+              class="combo-grid-description"
+              aria-live="polite"
+            >
+              <strong>{{ product.label }}</strong>
+              {{ product.description }}
+            </p>
           </div>
         </div>
         <div class="combo-panel__content">
@@ -142,13 +153,6 @@
             <div>
               <small>Escena sugerida</small>
               <strong>“{{ activeSolution().voiceCommand }}”</strong>
-            </div>
-          </div>
-
-          <div class="combo-kit">
-            <p>Kit incluido</p>
-            <div class="combo-kit__items">
-              <span *ngFor="let product of activeSolution().products">{{ product }}</span>
             </div>
           </div>
 
@@ -191,7 +195,7 @@
           </ng-container>
         </div>
 
-        <div>
+        <div class="promo-price">
           <span>Precio promo</span>
           <strong>$275.000</strong>
         </div>
@@ -212,22 +216,12 @@
         <li>Recibí alertas al instante</li>
       </ul>
 
-      <a class="button button--ghost" href="#contacto">
+      <a class="button button--ghost" href="https://www.youtube.com/shorts/bu9PvgxyLDQ" target="_blank" rel="noopener noreferrer">
         Ver cómo funciona
         <span aria-hidden="true">→</span>
       </a>
     </div>
     <div class="control__visual" aria-hidden="true"></div>
-  </section>
-
-  <section class="benefits page-shell" aria-label="Servicios incluidos">
-    <article class="benefit" *ngFor="let benefit of benefits">
-      <span class="benefit__icon" [attr.data-icon]="benefit.icon" aria-hidden="true"></span>
-      <div>
-        <h3>{{ benefit.title }}</h3>
-        <p>{{ benefit.description }}</p>
-      </div>
-    </article>
   </section>
 
   <section id="contacto" class="cta section-anchor page-shell">
@@ -260,7 +254,7 @@
     <a *ngFor="let item of navItems" [href]="'#' + item.target">{{ item.label }}</a>
   </nav>
 
-  <p>© 2024 ModoConectado. Todos los derechos reservados.</p>
+  <p>© 2026 ModoConectado. Todos los derechos reservados.</p>
 </footer>
 
 <a class="whatsapp-float" [href]="whatsappUrl" target="_blank" rel="noreferrer" aria-label="Cotizá por WhatsApp">

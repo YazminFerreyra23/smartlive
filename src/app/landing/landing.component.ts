@@ -34,18 +34,13 @@ interface ComboFeaturedProduct {
   image: string;
   x: number;
   y: number;
+  tooltipPosition?: 'top' | 'bottom';
 }
 
 interface PromoProduct {
   quantity: string;
   name: string;
   image: string;
-}
-
-interface Benefit {
-  icon: string;
-  title: string;
-  description: string;
 }
 
 @Component({
@@ -60,6 +55,7 @@ export class LandingComponent {
   protected readonly isScrolled = signal(false);
   protected readonly isMenuOpen = signal(false);
   protected readonly activeSolutionIndex = signal(0);
+  protected readonly activeFeaturedProduct = signal<ComboFeaturedProduct | null>(null);
 
   private readonly whatsappPhone = '5493512517479';
 
@@ -71,7 +67,6 @@ export class LandingComponent {
     { label: 'Inicio', target: 'inicio' },
     { label: 'Soluciones', target: 'soluciones' },
     { label: 'Combos', target: 'combos' },
-    { label: 'Sobre nosotros', target: 'sobre-nosotros' },
     { label: 'Contacto', target: 'contacto' },
   ];
 
@@ -95,6 +90,7 @@ export class LandingComponent {
           image: 'assets/images/Alexa.png',
           x: 68,
           y: 68,
+          tooltipPosition: 'bottom',
         },
         {
           label: '5 focos smart',
@@ -281,29 +277,6 @@ export class LandingComponent {
     },
   ];
 
-  protected readonly benefits: Benefit[] = [
-    {
-      icon: 'tool',
-      title: 'Instalación profesional',
-      description: 'Técnicos especializados.',
-    },
-    {
-      icon: 'gear',
-      title: 'Configuración incluida',
-      description: 'Dejamos todo listo para usar.',
-    },
-    {
-      icon: 'headset',
-      title: 'Soporte personalizado',
-      description: 'Te acompañamos siempre.',
-    },
-    {
-      icon: 'shield',
-      title: 'Garantía total',
-      description: 'Productos y servicio garantizados.',
-    },
-  ];
-
   constructor(
     @Inject(DOCUMENT) private readonly document: Document,
     private readonly renderer: Renderer2,
@@ -335,6 +308,7 @@ export class LandingComponent {
 
   protected setActiveSolution(index: number): void {
     this.activeSolutionIndex.set(index);
+    this.activeFeaturedProduct.set(null);
   }
 
   protected activeSolution(): SolutionCard {
