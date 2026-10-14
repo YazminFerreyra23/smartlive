@@ -1,17 +1,11 @@
-import { CommonModule, DOCUMENT } from '@angular/common';
+import { CommonModule } from '@angular/common';
+import { createWhatsappUrl } from '../shared/contact';
+import { SiteFooterComponent } from '../shared/site-footer.component';
 import {
   ChangeDetectionStrategy,
   Component,
-  HostListener,
-  Inject,
-  Renderer2,
   signal,
 } from '@angular/core';
-
-interface NavigationItem {
-  label: string;
-  target: string;
-}
 
 interface SolutionCard {
   eyebrow: string;
@@ -46,29 +40,18 @@ interface PromoProduct {
 @Component({
   selector: 'app-landing',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, SiteFooterComponent],
   templateUrl: './landing.component.html',
   styleUrl: './landing.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class LandingComponent {
-  protected readonly isScrolled = signal(false);
-  protected readonly isMenuOpen = signal(false);
   protected readonly activeSolutionIndex = signal(0);
   protected readonly activeFeaturedProduct = signal<ComboFeaturedProduct | null>(null);
 
-  private readonly whatsappPhone = '5493512517479';
-
-  protected readonly whatsappUrl = this.createWhatsappUrl(
+  protected readonly whatsappUrl = createWhatsappUrl(
     'Hola ModoConectado, quiero recibir información para automatizar mi espacio.',
   );
-
-  protected readonly navItems: NavigationItem[] = [
-    { label: 'Inicio', target: 'inicio' },
-    { label: 'Soluciones', target: 'soluciones' },
-    { label: 'Combos', target: 'combos' },
-    { label: 'Contacto', target: 'contacto' },
-  ];
 
   protected readonly solutions: SolutionCard[] = [
     {
@@ -81,7 +64,7 @@ export class LandingComponent {
       image: 'assets/images/solution-apartment-alexa-security.jpg',
       voiceCommand: 'Alexa, modo descanso',
       price: '$220.000',
-      products: ['1 Alexa', '5 focos smart', '1 control smart'],
+      products: ['1 Alexa', '3 focos smart', '1 control smart'],
       outcomes: ['Control por voz', 'Automatización inteligente', 'Mayor comodidad', 'Todo desde una sola app'],
       featuredProducts: [
         {
@@ -93,7 +76,7 @@ export class LandingComponent {
           tooltipPosition: 'bottom',
         },
         {
-          label: '5 focos smart',
+          label: '3 focos smart',
           description: 'Apagá, encendé y regulá las luces desde donde estés.',
           image: 'assets/images/foco.png',
           x: 52,
@@ -261,7 +244,7 @@ export class LandingComponent {
       image: 'assets/images/Alexa.png',
     },
     {
-      quantity: '5',
+      quantity: '3',
       name: 'Focos smart',
       image: 'assets/images/foco.png',
     },
@@ -277,35 +260,6 @@ export class LandingComponent {
     },
   ];
 
-  constructor(
-    @Inject(DOCUMENT) private readonly document: Document,
-    private readonly renderer: Renderer2,
-  ) {
-    this.updateScrollState();
-  }
-
-  @HostListener('window:scroll')
-  protected onWindowScroll(): void {
-    this.updateScrollState();
-  }
-
-  protected toggleMenu(): void {
-    this.isMenuOpen.update((isOpen) => {
-      const nextState = !isOpen;
-      this.syncBodyMenuState(nextState);
-      return nextState;
-    });
-  }
-
-  protected closeMenu(): void {
-    if (!this.isMenuOpen()) {
-      return;
-    }
-
-    this.isMenuOpen.set(false);
-    this.syncBodyMenuState(false);
-  }
-
   protected setActiveSolution(index: number): void {
     this.activeSolutionIndex.set(index);
     this.activeFeaturedProduct.set(null);
@@ -316,25 +270,9 @@ export class LandingComponent {
   }
 
   protected comboWhatsappUrl(solution: SolutionCard): string {
-    return this.createWhatsappUrl(
+    return createWhatsappUrl(
       `Hola ModoConectado, quiero cotizar el combo para ${solution.title}. Me interesa automatizar con Alexa, cámaras y dispositivos inteligentes.`,
     );
   }
 
-  private updateScrollState(): void {
-    this.isScrolled.set(this.document.defaultView?.scrollY ? this.document.defaultView.scrollY > 12 : false);
-  }
-
-  private createWhatsappUrl(message: string): string {
-    return `https://wa.me/${this.whatsappPhone}?text=${encodeURIComponent(message)}`;
-  }
-
-  private syncBodyMenuState(isOpen: boolean): void {
-    if (isOpen) {
-      this.renderer.addClass(this.document.body, 'menu-open');
-      return;
-    }
-
-    this.renderer.removeClass(this.document.body, 'menu-open');
-  }
 }

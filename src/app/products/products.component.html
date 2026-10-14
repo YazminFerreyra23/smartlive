@@ -1,0 +1,39 @@
+<main class="catalog">
+  <section class="catalog-intro" aria-labelledby="catalog-title">
+    <span class="eyebrow">TECNOLOGÍA PARA TU DÍA A DÍA</span>
+    <h1 id="catalog-title">Conectá tu mundo.</h1>
+    <p>Explorá nuestros productos y encontrá la tecnología que va con vos.</p>
+  </section>
+
+  <section aria-label="Catálogo de productos">
+    <div class="catalog-toolbar">
+      <div><h2>Productos</h2><p>Descubrí nuevas posibilidades para tus espacios.</p></div>
+      <label class="search"><span>Buscar productos</span><input type="search" placeholder="Buscar por nombre o categoría…" [value]="search()" (input)="search.set($any($event.target).value)"></label>
+    </div>
+    <div class="categories" aria-label="Filtrar por categoría">
+      @for (item of categories(); track item) {
+        <button type="button" [class.selected]="category() === item" [attr.aria-pressed]="category() === item" (click)="category.set(item)">{{ item }}</button>
+      }
+    </div>
+    <p class="results" role="status">{{ products().length }} {{ products().length === 1 ? 'producto' : 'productos' }}</p>
+    <div class="product-grid">
+      @for (product of products(); track product.id) {
+        <article class="product-card">
+          <div class="product-image"><img [src]="product.image" [alt]="product.name" loading="lazy" width="320" height="260"><span>{{ product.category }}</span></div>
+          <div class="product-content">
+            <h3>{{ product.name }}</h3><p>{{ product.description }}</p>
+            <ul>@for (feature of product.features; track feature) { <li>{{ feature }}</li> }</ul>
+            <div class="product-bottom">
+              @if (product.price !== null) { <strong>{{ product.price | currency:'ARS':'$':'1.0-0':'es-AR' }}</strong> } @else { <strong>Consultar precio</strong> }
+              <a [href]="consultUrl(product)" target="_blank" rel="noopener noreferrer" [attr.aria-label]="'Consultar por ' + product.name + ' en WhatsApp'">Consultar <span aria-hidden="true">↗</span></a>
+            </div>
+          </div>
+        </article>
+      } @empty {
+        <div class="empty-state"><h3>No encontramos productos</h3><p>Probá con otro nombre o seleccioná otra categoría.</p><button type="button" (click)="resetFilters()">Ver todos los productos</button></div>
+      }
+    </div>
+  </section>
+</main>
+
+<app-site-footer />

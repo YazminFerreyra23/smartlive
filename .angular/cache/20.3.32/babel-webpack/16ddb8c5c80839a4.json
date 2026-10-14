@@ -1,0 +1,1 @@
+{"ast":null,"code":"const WHATSAPP_PHONE = '5493512008632';\nexport function createWhatsappUrl(message) {\n  return `https://wa.me/${WHATSAPP_PHONE}?text=${encodeURIComponent(message)}`;\n}","map":null,"metadata":{},"sourceType":"module","externalDependencies":[]}
